@@ -19,7 +19,33 @@ export interface UserDocument {
     createdAt: Date;
     updatedAt: Date;
   }
+
+  export interface SpaceElements{
+    id:string;
+    elementId:string;
+    spacedId:string;
+    x:number;
+    y:number;
+    space:SpaceDocument;
+  }
+
+  export interface SpaceDocument{
+    _id:string;
+    creatorId: string;
+    name:string;
+    width:number;
+    height:number;
+    elements:SpaceElements[];
+    thumbnail:string;
+  }
   
+  export interface Avatar{
+    _id:string;
+    name:string;
+    imgUrl:string;
+
+  }
+
   export interface FurnitureItem {
     type: string;
     position: {
@@ -28,6 +54,7 @@ export interface UserDocument {
     };
     interaction?: string;
   }
+
   
   export interface Position {
     x: number;

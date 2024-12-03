@@ -8,6 +8,8 @@ const router = Router();
 router.post('/auth/register', validateRequest(registerSchema), UserController.registerUser as any);
 router.post('/auth/login', validateRequest(loginSchema),UserController.login as any);
 
-//
+//Create Room
+
+
 
 export default router;
