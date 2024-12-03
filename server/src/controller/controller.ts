@@ -3,7 +3,7 @@ import { createToken} from "../utils/jwt";
 import {User} from "../models/User";
 
 export const UserController={
-    registerUser: async function register(req:Request, res:Response) {
+    registerUser: async (req:Request, res:Response)=>{
     try {
         const {email, password,name,avatar} = req.body;
         const existingUser = await User.findOne({ email:email });
@@ -21,7 +21,7 @@ export const UserController={
     }     
     },
 
-   login: async function login(req:Request, res:Response){
+   login: async (req:Request, res:Response)=>{
     try {
         const { email, password } = req.body;
     
