@@ -4,8 +4,10 @@ export interface UserDocument {
     password: string;
     name: string;
     avatar: string;
+    userType: string;
     createdAt: Date;
     updatedAt: Date;
+    comparePassword(candidatePassword: string): Promise<boolean>;
   }
   
   export interface RoomDocument {
