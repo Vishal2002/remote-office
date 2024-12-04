@@ -1,38 +1,40 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import { UserDocument } from '../types/index';
+
+// Enum for user roles
+const UserRoleEnum = ['User', 'Admin'];
 
 const userSchema = new mongoose.Schema({
-  email: {
+  username: {
     type: String,
     required: true,
     unique: true,
     trim: true,
-    lowercase: true,
   },
   password: {
     type: String,
     required: true,
     minlength: 6,
   },
-  name: {
-    type: String,
-    required: true,
-    trim: true,
+  avatarId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Avatar',
+    default: null,
   },
-  avatar: {
+  role: {
     type: String,
-    default: 'https://api.dicebear.com/7.x/pixel-art/svg',
-  },
-  userType:{
-    type:String,
-    enum:['User','Admin'],
+    enum: UserRoleEnum,
     default: 'User'
-  }
+  },
+  spaces: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Space'
+  }]
 }, {
   timestamps: true,
 });
 
+// Password hashing middleware
 userSchema.pre('save', async function(next) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
@@ -40,8 +42,9 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
-userSchema.methods.comparePassword = async function(candidatePassword: string) {
+// Password comparison method
+userSchema.methods.comparePassword = async function(candidatePassword:string) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-export const User = mongoose.model<UserDocument>('User', userSchema);
+export const User = mongoose.model('User', userSchema);
