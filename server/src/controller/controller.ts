@@ -12,7 +12,7 @@ export const UserController={
         }
         const user= new User({ email:email, password:password, name:name,avatar:avatar||''});
         await user.save();
-        const token = createToken(user?._id,user.userType)
+        const token = createToken(user?._id,user?.role)
        return  res.status(200).json({message:"Registration successful",token:token});
     }            
      catch (error) {
@@ -30,15 +30,14 @@ export const UserController={
         if (!user) {
           return res.status(404).json({ message: 'User not found' });
         }
-    
+      //@ts-ignore
         const isPasswordValid = await user.comparePassword(password);
     
         if (!isPasswordValid) {
           return res.status(401).json({ message: 'Invalid credentials' });
         }
     
-        // Generate token with user type
-        const token = createToken(user._id, user.userType);
+        const token = createToken(user._id, user.role);
     
         return res.status(200).json({
           message: 'Login successful',

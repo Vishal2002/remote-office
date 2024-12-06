@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
+
 // Enum for user roles
 const UserRoleEnum = ['User', 'Admin'];
 

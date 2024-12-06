@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config();
 
-export const createToken = (userId: string,userType:string): string => {
+export const createToken = (userId:any,userType:string): string => {
   return jwt.sign({ userId,userType }, process.env.JWT_SECRET as string, {
     expiresIn: '7d',
   });
